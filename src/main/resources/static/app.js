@@ -4,7 +4,7 @@ const myApp = {
 
     // Préparation des données
     data() {
-        console.log("data");
+
         return {
             counter: 1,
             message: "Hello",
@@ -19,7 +19,10 @@ const myApp = {
             targetSection:null,
             errors: [],
             isAddCv: false,
-            newCv: null
+            newCv: null,
+            person: {},
+            token: null,
+            isRegister: null
         }
     },
 
@@ -31,6 +34,8 @@ const myApp = {
             timeout: 1000,
             headers: {'Content-Type': 'application/json'},
         });
+
+
 
         this.getCvs();
     },
@@ -50,7 +55,8 @@ const myApp = {
         // },
 
         getCvs: function() {
-            console.log("clicked");
+            axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+            console.log(this.person);
             this.axios.get("api/cvs")
                 .then(cvs => {
                     this.cvs = cvs.data;
@@ -70,7 +76,9 @@ const myApp = {
         // },
 
         showCv: function(id) {
-            this.axios.get('api/person/'+ id + '/cv' )
+            this.token = window.localStorage.getItem("token");
+            console.log(this.token);
+            this.axios.get('api/person/'+ id + '/cv' , { 'headers': { 'Authorization': 'Bearer ' + this.token} })
                 .then(r => {
                     console.log("cv fetched to show");
                     this.activities = r.data;
@@ -79,7 +87,7 @@ const myApp = {
 
         },
         //
-        editCV: async function(activity,id) {
+        editCV: async function(activity, id) {
             console.log("activity with id " + activity.id + " is set to be modified");
             this.editCvActivity = activity;
             console.log(this.editCvActivity);
@@ -122,12 +130,31 @@ const myApp = {
                     this.getCvs();
                 });
         },
+        register: function(person) {
+            person.roles= ["ROLE_ADMIN"];
+            console.log(person);
+
+            this.axios.post('/secu-users/signup', person)
+                .then(res => {
+                    console.log("done ", person);
+                    this.token = res.data;
+
+                }).then(res =>{
+                window.localStorage.setItem("token", this.token);
+                window.location.href = "/app";
+            });
+        },
+        setRegister: function(status) {
+            console.log(this.isAddCv)
+            this.isRegister = status;
+        },
         //
         // incrementCounter: function() {
         //     this.$refs.counter.increment();
         // }
 
-    }
+    },
+
 }
 
 const app = Vue.createApp(myApp);

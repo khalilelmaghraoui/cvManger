@@ -12,6 +12,11 @@ public class VueAppController {
         return new ModelAndView("app");
     }
 
+    @RequestMapping(value = "/register")
+    private ModelAndView register() {
+        return new ModelAndView("register");
+    }
+
     @RequestMapping(value = "/routage")
     private ModelAndView routage() {
         return new ModelAndView("routage");
