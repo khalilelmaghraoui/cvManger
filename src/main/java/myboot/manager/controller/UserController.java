@@ -30,11 +30,10 @@ public class UserController {
 	 */
 	@PostMapping("/login")
 	public String login(//
-			@RequestParam String username, //
-			@RequestParam String password) {
-		System.out.println(username);
-		System.out.println(password);
-		return userService.login(username, password);
+			@RequestBody PersonDTO person) {
+		System.out.println(person.getUserName());
+		System.out.println(person.getUserName());
+		return userService.login(person.getUserName(), person.getPassword());
 	}
 
 	/**

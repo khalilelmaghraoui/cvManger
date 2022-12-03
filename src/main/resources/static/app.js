@@ -24,7 +24,13 @@ const myApp = {
             person: {},
             token: null,
             isRegister: null,
-            personid:null
+            personid:null,
+            newPerson:{},
+            isAddPerson:null,
+            logged:window.localStorage.getItem("token"),
+            isLogin:null,
+            user:{},
+            isRegister:false
         }
     },
 
@@ -43,18 +49,7 @@ const myApp = {
     },
 
     methods: {
-        // // Place pour les futures méthodes
-        // incCounter: function(step) {
-        //     console.log("increment counter");
-        //     this.counter += step;
-        //
-        //     this.$refs.info.change(this.counter);
-        // },
-        //
-        // getMovie: async function(id) {
-        //     const resp = await axios.get('api/movies/' + id);
-        //     return await resp.data;
-        // },
+
 
         getCvs: function() {
             // axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
@@ -98,32 +93,13 @@ const myApp = {
             console.log(this.targetSection)
 
         },
-        //
-        // populateMovies: function() {
-        //     this.axios.patch('api/movies/')
-        //         .then(r => {
-        //             console.log("movies added");
-        //             this.getMovies();
-        //         });
-        // },
-        //
-        // submitMovie: function(movie) {
-        //     this.axios.put('api/movies/' + movie.id, movie)
-        //         .then(errors => {
-        //             this.errors = errors.data;
-        //             this.getMovies();
-        //         });
-        // },
-        //
-        // clearEditable: function() {
-        //     this.editable = null;
-        // },
-        //
+
         setAddCv: function(status) {
             console.log(this.isAddCv)
             this.isAddCv = status;
             this.newCv = {};
         },
+
         //
         addCv: function(personId,cvActivities) {
             personId=1;
@@ -133,6 +109,19 @@ const myApp = {
                     console.log("new movie added: ", cvActivities);
                     this.errors = errors.data;
                     this.getCvs();
+                });
+        },
+        setAddPerson: function(status) {
+            console.log(this.isAddPerson)
+            this.isAddPerson = status;
+            this.newPerson = {};
+        },
+        addNewPerson: function(newPerson) {
+            newPerson.roles = ["ROLE_ADMIN"];
+           console.log("added Perosn ", newPerson);
+            this.axios.post('/api/person/add', newPerson)
+                .then(res => {
+                    console.log("added Perosn ", newPerson);
                 });
         },
         register: function(person) {
@@ -146,17 +135,31 @@ const myApp = {
 
                 }).then(res =>{
                 window.localStorage.setItem("token", this.token);
-                window.location.href = "/app";
+                this.isRegister = false;
             });
         },
         setRegister: function(status) {
+            console.log(this.isRegister)
+            this.isRegister = status;
+        },
+        login: function(person) {
+            console.log("done ", person);
+            
+
+            this.axios.post('/secu-users/login',person)
+                .then(res => {
+                    this.token = res.data;
+
+                }).then(res =>{
+                window.localStorage.setItem("token", this.token);
+                this.logged = true;
+                window.location.href = "/app";
+            });
+        },
+        setLogin: function(status) {
             console.log(this.isAddCv)
             this.isRegister = status;
         },
-        //
-        // incrementCounter: function() {
-        //     this.$refs.counter.increment();
-        // }
 
     },
 
