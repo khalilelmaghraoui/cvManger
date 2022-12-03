@@ -124,54 +124,108 @@
             <div class="card ">
                 <div class="card-header">
                     <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
-                        <div id="readroot" style="display: none">
+<%--                        <div id="readroot" style="display: none">--%>
 
-                            <input type="button" value="Remove review"
-                                   onclick="this.parentNode.parentNode.removeChild(this.parentNode);"
-                            /><br/><br />
+<%--                            <input type="button" value="Remove review"--%>
+<%--                                   onclick="this.parentNode.parentNode.removeChild(this.parentNode);"--%>
+<%--                            /><br/><br />--%>
 
-                            <div class="form-group">
-                                <label for="datetimepicker3">date</label>
-                                <div class='input-group date' id='datetimepicker3'>
-                                    <input type='date' class="form-control" />
-                                </div>
-                            </div>
-                            <div  class="form-group">
-                                <label>
-                                    <select name="nature" class="form-control form-control-sm">
-                                        <option value="formation">formation</option>
-                                        <option value="experience_prof">expérience professionnelle</option>
-                                        <option value="projets">projets</option>
-                                        <option value="autre">autre</option>
-                                    </select>
-                                </label></div>
-                            <div class="form-group">
-                                <label for="formGroupExampleInput2">titre</label>
-                                <input type="text" class="form-control" id="formGroupExampleInput3" placeholder="Another input">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">description</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="formGroupExampleInput2">Adresse WEB </label>
-                                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-                            </div>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="datetimepicker3">Year</label>--%>
+<%--                                <div class='input-group date' id='datetimepicker3'>--%>
+<%--                                    <input type='text' name="year" id="year" class="form-control" />--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                            <div  class="form-group">--%>
+<%--                                <label>--%>
+<%--                                    <select name="activity.nature" class="form-control form-control-sm">--%>
+<%--                                        <option value="formation">Formation</option>--%>
+<%--                                        <option value="experience_prof" >expérience professionnelle</option>--%>
+<%--                                        <option value="projets">projets</option>--%>
+<%--                                        <option value="autre">autre</option>--%>
+<%--                                    </select>--%>
+<%--                                </label></div>--%>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="formGroupExampleInput2">titre</label>--%>
+<%--                                <input type="text" class="form-control" id="formGroupExampleInput3" name="activity.title" placeholder="Another input">--%>
+<%--                            </div>--%>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="exampleFormControlTextarea1">description</label>--%>
+<%--                                <textarea class="form-control" name="activity.description" id="exampleFormControlTextarea1" rows="3"></textarea>--%>
+<%--                            </div>--%>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="formGroupExampleInput2">Adresse WEB </label>--%>
+<%--                                <input type="text" class="form-control" name="activity.web" id="formGroupExampleInput2" placeholder="Another input">--%>
+<%--                            </div>--%>
 
-                        </div>
+<%--                        </div>--%>
 
-                        <form method="post" action="">
-
-
-                            <span id="writeroot"></span>
-
-                            <input type="button" onclick="moreFields()"  value="ajouter une section" />
-                            <input type="submit" value="save" />
-                            <input v-on:click="setAddCv(false)" type="button" value="clear"/>
+<%--                        <form method="post">--%>
 
 
-                        </form>
-                    </div></div></div></div></div></div>
+<%--                            <span id="writeroot"></span>--%>
+
+<%--                            <input type="button" onclick="moreFields()"  value="ajouter une section" />--%>
+<%--                            <input v-on:click="setAddCv(false)" type="button" value="clear"/>--%>
+<%--                            <button v-on:click.prevent="addCv(personId,cvActivities)" class="btn btn-primary mr-2">--%>
+<%--                                Add Movie</button>--%>
+
+
+<%--                        </form>--%>
+<%--                        --%>
+
+    <form  id="add-cv" method="post" novalidate="true">
+        <h1 class="mt-4">Register</h1>
+
+        <div class="form-group">
+            <label>yea :</label>
+            <input v-model="cvActivities.year" class="form-control" name="cvActivities.year"
+                   v-bind:class="{'is-invalid':errors.name}" />
+            <div v-if="(errors.name)" class="alert alert-warning">
+                {{errors.name}}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>title :</label>
+            <input v-model="cvActivities.title" class="form-control" name="pcvActivities.title"
+                   v-bind:class="{'is-invalid':errors.name}" />
+            <div v-if="(errors.name)" class="alert alert-warning">
+                {{errors.name}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label>nature :</label>
+            <input v-model="cvActivities.nature" class="form-control" name="pcvActivities.nature"
+                   v-bind:class="{'is-invalid':errors.name}" />
+            <div v-if="(errors.name)" class="alert alert-warning">
+                {{errors.name}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label>web :</label>
+            <input v-model="cvActivities.web" class="form-control" name="cvActivities.web"
+                   v-bind:class="{'is-invalid':errors.year}" number />
+            <div v-if="(errors.year)" class="alert alert-warning">
+                {{errors.year}}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button v-on:click.prevent="addCv(personId,cvActivities)" class="btn btn-primary mr-2">
+                Add Movie</button>
+            <button v-on:click.prevent="addCv(personId,cvActivities)" class="btn btn-outline-primary">
+                add add</button>
+        </div>
+    </form>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div></div></div>
 
 
 
@@ -199,7 +253,8 @@
                                             </h5>
                                         </div>
 
-                                        <div id="collapseOne1" class="collapse show" aria-labelledby="headingOne1" data-parent="#accordion1">
+                                        <div id="collapseOne1" class="collapse show" aria-labelledby="headingOne1"
+                                             data-parent="#accordion1">
                                             <div class="card" style="width: 30rem;">
                                                 <div class="card-body">
                                                     <div class="form-group">

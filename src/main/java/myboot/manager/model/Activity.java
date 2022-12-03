@@ -29,7 +29,7 @@ public class Activity {
     
     @Basic
     @NotNull
-    private Long year;
+    private String year;
     
     @Basic
     @NotNull

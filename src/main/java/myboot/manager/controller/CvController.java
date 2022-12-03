@@ -30,7 +30,9 @@ public class CvController {
 
 
     @PostMapping ("person/{personId}/cv")
-    public ResponseEntity createCV(@PathVariable(value = "personId") Long personId, @RequestBody List<Activity> activities) {
+    public ResponseEntity createCV(@PathVariable(value = "personId") Long personId, @RequestBody Activity activity) {
+        List<Activity> activities = new ArrayList<Activity>();
+        activities.add(activity);
         activityManager.createPersonCv(personId, activities);
        return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -77,8 +79,8 @@ public class CvController {
         personManager.createPerson(p);
 
         //create Activities
-        Activity activity = new Activity(1L, 1999L, Nature.professional, "SQLI", "test test test", "web test", p);
-        Activity activity2 = new Activity(2L, 1999L, Nature.professional, "SQLI11111", "test test test", "web test", p);
+        Activity activity = new Activity(1L, "199", Nature.professional, "SQLI", "test test test", "web test", p);
+        Activity activity2 = new Activity(2L, "1999", Nature.professional, "SQLI11111", "test test test", "web test", p);
         List<Activity> activities = new ArrayList<Activity>();
         activities.add(activity);
         activities.add(activity2);

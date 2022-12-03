@@ -12,17 +12,19 @@ const myApp = {
             axios: null,
             cvs: [],
             activities: null,
+            cvActivities: {},
             activitiesStatus:false,
-            cv: null,
+            cv: {},
             user:null,
             editCvActivity: null,
             targetSection:null,
             errors: [],
             isAddCv: false,
-            newCv: null,
+            newCv: {},
             person: {},
             token: null,
-            isRegister: null
+            isRegister: null,
+            personid:null
         }
     },
 
@@ -55,7 +57,7 @@ const myApp = {
         // },
 
         getCvs: function() {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
             console.log(this.person);
             this.axios.get("api/cvs")
                 .then(cvs => {
@@ -76,9 +78,10 @@ const myApp = {
         // },
 
         showCv: function(id) {
-            this.token = window.localStorage.getItem("token");
-            console.log(this.token);
-            this.axios.get('api/person/'+ id + '/cv' , { 'headers': { 'Authorization': 'Bearer ' + this.token} })
+            // this.token = window.localStorage.getItem("token");
+            // console.log(this.token);
+            //{ 'headers': { 'Authorization': 'Bearer ' + this.token} }
+            this.axios.get('api/person/'+ id + '/cv' )
                 .then(r => {
                     console.log("cv fetched to show");
                     this.activities = r.data;
@@ -122,10 +125,12 @@ const myApp = {
             this.newCv = {};
         },
         //
-        addMovie: function(newCv) {
-            this.axios.post('api/movies/', newCv)
+        addCv: function(personId,cvActivities) {
+            personId=1;
+            console.log("new movie added: ", cvActivities);
+            this.axios.post("/api/person/"+personId+"/cv",cvActivities)
                 .then(errors => {
-                    console.log("new movie added: ", newCv);
+                    console.log("new movie added: ", cvActivities);
                     this.errors = errors.data;
                     this.getCvs();
                 });
