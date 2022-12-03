@@ -66,6 +66,11 @@ public class CvController {
         activityManager.deletePersonCv(personId);
         return new ResponseEntity(HttpStatus.OK);
     }
+    @DeleteMapping ("/activity/{id}")
+    public ResponseEntity deletePersonActivity(@PathVariable(value = "id") Long id) {
+        activityManager.deletePersonActivity(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
 
     @PostConstruct

@@ -68,9 +68,8 @@ public class UserController {
 	 * Récupérer des informations sur l'utilisateur courant
 	 */
 	@GetMapping(value = "/me")
-	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
-	public PersonDTO whoami(HttpServletRequest req) {
-		return modelMapper.map(userService.whoami(req), PersonDTO.class);
+	public Person whoami(HttpServletRequest req) {
+		return userService.whoami(req);
 	}
 
 	/**

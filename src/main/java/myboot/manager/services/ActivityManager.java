@@ -58,5 +58,9 @@ public class ActivityManager {
 		List<Activity> activities = activityRepository.findByPersonId(personId);
 		activityRepository.deleteAll(activities);
 	}
+
+	public void deletePersonActivity(Long id) {
+		activityRepository.deleteById(id);
+	}
 }
 

@@ -31,7 +31,7 @@
 </script>
 <div id="myApp">
     <div class="container">
-        <h1>Gestion CV</h1>
+        <h1><a href="/home">Gestion CV</a></h1>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -41,26 +41,23 @@
 
 
 
-    <div v-if="(logged)" class="pageWrapper">
+    <div  class="pageWrapper">
         <table class="table">
             <tr>
-                <th>FirstName</th>
-                <th>LastName</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>web</th>
+                <th>birth</th>
             </tr>
-            <tr v-for="cv in cvs">
-                <td>{{cv.person.firstName}}</td>
-                <td>{{cv.person.lastName}}</td>
+
+                <td>{{me.firstName}}</td>
+                <td>{{me.lastName}}</td>
+                <td>{{me.web}}</td>
+                <td>{{me.birth}}</td>
 
                 <%--Actions--%>
                 <td><button class="btn btn-primary btn-sm"
-                            v-on:click="showCv(cv.person.id)">Show Cv</button></td>
-
-                <td><button class="btn btn-success btn-sm"
-                            v-on:click="editMovie(movie)">Edit</button></td>
-
-                <td><button class="btn btn-danger btn-sm"
-                            v-on:click="deleteMovie(movie.id)">Delete</button></td>
-            </tr>
+                            v-on:click="showCv(me.id)">Show Cv</button></td>
         </table>
 
         <div v-if="(activitiesStatus)"  class="container py-5" >
@@ -68,7 +65,7 @@
                 <div class="col-lg-6 mx-auto">
                     <div class="card ">
                         <div class="card-header">
-                            <a class="navbar-brand" href="#" v-on:click="setAddCv(true)">ajouter une section</a>
+                            <h1 class="navbar-brand">CV</h1>
                             <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
                                 <div id="accordion">
                                     <div class="card" v-for="activity in activities" >
@@ -85,18 +82,26 @@
                                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                             <div class="card" style="width: 30rem;">
                                                 <div class="card-body">
-                                                    <h5 class="card-title">{{activity.title}}</h5>
-                                                    <h6 class="card-subtitle mb-2 text-muted">{{activity.year}}</h6>
-                                                    <p class="card-text">{{activity.description}}</p>
+                                                    <h5 class="card-title"><span class="font-weight-light">Title: </span>{{activity.title}}</h5>
+                                                    <h6 class="card-text"><span class="font-weight-light">Year: </span>{{activity.year}}</h6>
+                                                    <p class="card-text"><span class="font-weight-light">Description: </span>{{activity.description}}</p>
+                                                    <h6 class="card-subtitle mb-2 text-muted"><span class="font-weight-light">Web: </span>{{activity.web}}</h6>
+                                                    <h6 class="card-subtitle mb-2 text-muted"><span class="font-weight-light">Nature: </span> <span class="badge badge-secondary">{{activity.nature}}</span></h6>
 
                                                 </div>
                                             </div>
-                                            <button class="btn btn-success btn-sm"
-                                                    v-on:click="editCV(activity,activity.id)">Edit</button>
+                                            <div class="form-group">
+                                                <button class="btn mr-1 btn-success btn-sm"
+                                                        v-on:click="editCV(activity,activity.id)">Edit</button>
+
+                                                <button class="btn .px-2 btn-danger  btn-sm"
+                                                        v-on:click="deleteActivity(activity.id)">delete</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <a class="navbar-brand" href="#" v-on:click="setAddCv(true)">ajouter une section</a>
                         </div>
                     </div>
                 </div>
@@ -115,17 +120,8 @@
                                     <h1 class="mt-4">add new Section</h1>
 
                                     <div class="form-group">
-                                        <label>yea :</label>
-                                        <input v-model="cvActivities.year" class="form-control" name="cvActivities.year"
-                                               v-bind:class="{'is-invalid':errors.name}" />
-                                        <div v-if="(errors.name)" class="alert alert-warning">
-                                            {{errors.name}}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
                                         <label>title :</label>
-                                        <input v-model="cvActivities.title" class="form-control" name="pcvActivities.title"
+                                        <input v-model="cvActivities.title" name="cvActivities.title" class="form-control"
                                                v-bind:class="{'is-invalid':errors.name}" />
                                         <div v-if="(errors.name)" class="alert alert-warning">
                                             {{errors.name}}
@@ -133,25 +129,47 @@
                                     </div>
                                     <div class="form-group">
                                         <label>nature :</label>
-                                        <input v-model="cvActivities.nature" class="form-control" name="pcvActivities.nature"
+                                        <select v-bind:class="{'is-invalid':errors.name}" v-model="cvActivities.nature" name="cvActivities.nature" class="form-select" aria-label="Default select example">
+                                            <option value="professional">professional</option>
+                                            <option value="professional">foramtion</option>
+                                            <option value="projets">projets</option>
+                                            <option value="autre">autre</option>
+                                        </select>
+                                        <div v-if="(errors.name)" class="alert alert-warning">
+                                            {{errors.name}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>year :</label>
+                                        <input v-model="cvActivities.year" name="cvActivities.year" class="form-control"
+                                               v-bind:class="{'is-invalid':errors.name}" />
+                                        <div v-if="(errors.name)" class="alert alert-warning">
+                                            {{errors.name}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>description :</label>
+                                        <input v-model="cvActivities.description" name="cvActivities.description" class="form-control"
+                                               v-bind:class="{'is-invalid':errors.name}" />
+                                        <div v-if="(errors.name)" class="alert alert-warning">
+                                            {{errors.name}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>web :</label>
+                                        <input v-model="cvActivities.web" name="cvActivities.web"  class="form-control"
                                                v-bind:class="{'is-invalid':errors.name}" />
                                         <div v-if="(errors.name)" class="alert alert-warning">
                                             {{errors.name}}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>web :</label>
-                                        <input v-model="cvActivities.web" class="form-control" name="cvActivities.web"
-                                               v-bind:class="{'is-invalid':errors.year}" number />
-                                        <div v-if="(errors.year)" class="alert alert-warning">
-                                            {{errors.year}}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <button v-on:click.prevent="addCv(personId,cvActivities)" class="btn btn-primary mr-2">
+                                        <button v-on:click.prevent="addCv(me.id,cvActivities)" class="btn btn-primary mr-2">
                                             Add Movie</button>
-                                        <button v-on:click.prevent="addCv(personId,cvActivities)" class="btn btn-outline-primary">
+                                        <button v-on:click.prevent="addCv(me.id,cvActivities)" class="btn btn-outline-primary">
                                             add add</button>
                                     </div>
                                 </form>
@@ -192,7 +210,7 @@
                                                     <div class="card-body">
                                                         <div class="form-group">
                                                             <label>title :</label>
-                                                            <input v-model="editCvActivity.title" class="form-control"
+                                                            <input v-model="editCvActivity.title" name="editCvActivity.title" class="form-control"
                                                                    v-bind:class="{'is-invalid':errors.name}" />
                                                             <div v-if="(errors.name)" class="alert alert-warning">
                                                                 {{errors.name}}
@@ -200,7 +218,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label>nature :</label>
-                                                            <input v-model="editCvActivity.nature" class="form-control"
+                                                            <input v-model="editCvActivity.nature" name="editCvActivity.nature" class="form-control"
                                                                    v-bind:class="{'is-invalid':errors.name}" />
                                                             <div v-if="(errors.name)" class="alert alert-warning">
                                                                 {{errors.name}}
@@ -209,7 +227,7 @@
 
                                                         <div class="form-group">
                                                             <label>year :</label>
-                                                            <input v-model="editCvActivity.year" class="form-control"
+                                                            <input v-model="editCvActivity.year" name="editCvActivity.year" class="form-control"
                                                                    v-bind:class="{'is-invalid':errors.name}" />
                                                             <div v-if="(errors.name)" class="alert alert-warning">
                                                                 {{errors.name}}
@@ -218,7 +236,7 @@
 
                                                         <div class="form-group">
                                                             <label>description :</label>
-                                                            <input v-model="editCvActivity.description" class="form-control"
+                                                            <input v-model="editCvActivity.description" name="editCvActivity.description" class="form-control"
                                                                    v-bind:class="{'is-invalid':errors.name}" />
                                                             <div v-if="(errors.name)" class="alert alert-warning">
                                                                 {{errors.name}}
@@ -227,7 +245,7 @@
 
                                                         <div class="form-group">
                                                             <label>web :</label>
-                                                            <input v-model="editCvActivity.web" class="form-control"
+                                                            <input v-model="editCvActivity.web" name="editCvActivity.web"  class="form-control"
                                                                    v-bind:class="{'is-invalid':errors.name}" />
                                                             <div v-if="(errors.name)" class="alert alert-warning">
                                                                 {{errors.name}}
@@ -237,9 +255,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <button v-on:click.prevent="" class="btn btn-primary mr-2">
+                                                    <button v-on:click.prevent="editCV(editCvActivity, editCvActivity.id)" class="btn btn-primary mr-2">
                                                         Save</button>
-                                                    <button v-on:click="" class="btn btn-outline-primary">
+                                                    <button v-on:click="addNewPerson(newPerson)" class="btn btn-outline-primary">
                                                         Clear</button>
                                                 </div>
                                             </div>
