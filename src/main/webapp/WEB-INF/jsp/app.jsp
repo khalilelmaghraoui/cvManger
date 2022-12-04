@@ -35,8 +35,9 @@
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#" v-on:click="setAddCv(true)">ajouter un Cv</a>
-        <a class="navbar-brand" href="#" v-on:click="setAddPerson(true)">ajouter un Person</a>
+        <a class="navbar-brand badge badge-pill text-white badge-primary" href="#" v-on:click="setAddCv(true)">add new Cv</a>
+        <a class="navbar-brand badge badge-pill  text-white badge-primary" href="#" v-on:click="setAddPerson(true)">add new person</a>
+        <a class="navbar-brand badge badge-pill  text-white badge-danger" href="#" v-on:click="logout(true)">logout</a>
     </nav>
 
 
@@ -101,7 +102,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a class="navbar-brand" href="#" v-on:click="setAddCv(true)">ajouter une section</a>
+                            <button  v-on:click="setAddCv(true)" type="button" class="btn btn-primary">add new section</button>
                         </div>
                     </div>
                 </div>
@@ -168,9 +169,9 @@
                                     </div>
                                     <div class="form-group">
                                         <button v-on:click.prevent="addCv(me.id,cvActivities)" class="btn btn-primary mr-2">
-                                            Add Movie</button>
+                                            Add section</button>
                                         <button v-on:click.prevent="addCv(me.id,cvActivities)" class="btn btn-outline-primary">
-                                            add add</button>
+                                            clear</button>
                                     </div>
                                 </form>
                             </div>
@@ -226,11 +227,10 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label>year :</label>
-                                                            <input v-model="editCvActivity.year" name="editCvActivity.year" class="form-control"
-                                                                   v-bind:class="{'is-invalid':errors.name}" />
-                                                            <div v-if="(errors.name)" class="alert alert-warning">
-                                                                {{errors.name}}
+                                                            <label for="datetimepicker3">Year: </label>
+                                                            <div class='input-group date'>
+                                                                <input type='date'v-model="editCvActivity.year" name="editCvActivity.year" class="form-control"
+                                                                       v-bind:class="{'is-invalid':errors.name}"  v-model="editCvActivity.year" />
                                                             </div>
                                                         </div>
 
@@ -330,7 +330,7 @@
 
                                     <div class="form-group">
                                         <button v-on:click.prevent="addNewPerson(newPerson)" class="btn btn-primary mr-2">
-                                            Add Movie
+                                            Add New Person
                                         </button>
                                         <button v-on:click="" class="btn btn-outline-primary">
                                             Clear

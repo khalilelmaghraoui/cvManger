@@ -56,8 +56,11 @@ const myApp = {
 
         get: function() {
             // axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+            console.log(document.URL.includes("/app"));
+            if(this.token == null && document.URL.includes("/app")){
+                window.location.href = "/auth";
+            }
 
-            console.log(this.token);
             if(this.token){
                 this.getMyCv();
             }
@@ -185,6 +188,12 @@ const myApp = {
         setLogin: function(status) {
             console.log(this.isAddCv)
             this.isRegister = status;
+        },
+        logout: function(status) {
+            console.log(this.isAddCv)
+            this.token = null;
+            window.localStorage.clear();
+            window.location.href = "/home";
         },
 
     },

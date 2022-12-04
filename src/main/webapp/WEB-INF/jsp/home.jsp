@@ -35,7 +35,7 @@
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/app" >My Cv</a>
+        <a class="navbar-brand badge badge-pill text-white badge-primary" href="/app" >My Cv</a>
     </nav>
 
     <table class="table">
