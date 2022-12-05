@@ -18,7 +18,7 @@
                             </div>
                             <div class="form-group">
                                 <label>password :</label>
-                                <input v-model="person.password" class="form-control" name="person.password"
+                                <input type="password" v-model="person.password" class="form-control" name="person.password"
                                        v-bind:class="{'is-invalid':errors.year}" number/>
 
                             </div>

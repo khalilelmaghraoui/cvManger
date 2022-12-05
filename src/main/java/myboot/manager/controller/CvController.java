@@ -80,25 +80,26 @@ public class CvController {
         Set<String> roles = new HashSet<String>();
         roles.add(String.valueOf(AppUserRole.ROLE_ADMIN));
 
-        Person p = new Person(1L, "mario", "super", "1999", "web", "test", "test", "test", roles );
+        Person p = new Person(1L, "mario", "super", "web", "2000", "test", "test", "test", roles );
         personManager.createPerson(p);
 
 
 
         //create Activities
-        Activity activity = new Activity(1L, "199", Nature.professional, "SQLI", "test test test", "web test", p);
-        Activity activity2 = new Activity(2L, "1999", Nature.professional, "SQLI11111", "test test test", "web test", p);
+        Activity activity = new Activity(1L, "2022", Nature.professional, "SQLI", "Projet d'un client telecom belge (VOO): Développement et maintenance de nouvelles fonctionnalités.", "web", p);
+        Activity activity2 = new Activity(2L, "2021", Nature.professional, "JP&CO", "Projet de conception et développement d’un algorithme de calcul de gasoile consommé depuis les trackings de chaque véhicule.", "web", p);
         List<Activity> activities = new ArrayList<Activity>();
         activities.add(activity);
         activities.add(activity2);
         activityManager.savePersonCv(activities);
 
-        Person p2 = new Person(2L, "mario2", "super2", "19992", "web", "test2", "test2", "test2", roles );
+        Person p2 = new Person(2L, "Luigi", "super", "web", "1999", "test2", "test2", "test2", roles );
 
         personManager.createPerson(p2);
 
         //create Activities
         activity.setId(3L);
+        activity.setTitle("Atos");
         activity.setPerson(p2);
         List<Activity> activities2 = new ArrayList<Activity>();
         activities2.add(activity);

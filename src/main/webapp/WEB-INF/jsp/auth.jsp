@@ -31,7 +31,7 @@
 </script>
 <div id="myApp">
     <div class="container">
-        <h1>Gestion CV</h1>
+        <h1><a href="/home">Gestion CV</a></h1>
     </div>
 
 
